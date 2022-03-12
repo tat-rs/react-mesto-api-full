@@ -206,7 +206,7 @@ function App() {
       .then((data) => {
         if(data.token) {
           handleUserEmail(userEmail); //сохранили эл. почту пользователя в стейт
-          localStorage.setItem('token', data.token);//сохранили токен
+          /* localStorage.setItem('token', data.token);//сохранили токен */
           handleLogin();//статус пользователя - зарегистрирован
           history.push('/'); //переадресация на основную страницу
         } else {

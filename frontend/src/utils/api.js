@@ -90,9 +90,9 @@ class Api {
 }
  
 const api = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-30/',
+  url: 'https://api.mesto22.nomoredomains.work',
   headers: {
-    authorization: '3ace1836-34ae-4def-81c7-968efe5e4e17',
+    /* authorization: '3ace1836-34ae-4def-81c7-968efe5e4e17', */
     "content-type": "application/json",
   }
 })
