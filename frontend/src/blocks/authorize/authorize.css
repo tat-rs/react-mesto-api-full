@@ -1,0 +1,13 @@
+.authorize {
+  box-sizing: border-box;
+  padding-top: 20px;
+  max-width: 358px;
+  margin: 0 auto;
+}
+
+@media(max-width: 450px) {
+  .authorize {
+    max-width: 260px;
+    padding: 0;
+  }
+}
