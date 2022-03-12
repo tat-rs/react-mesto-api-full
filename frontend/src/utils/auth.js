@@ -1,4 +1,4 @@
-const BASE_URL = 'https://auth.nomoreparties.co';
+const BASE_URL = 'https://api.mesto22.nomoredomains.work';
 
 //класс запроса к серверу
 class Api {
