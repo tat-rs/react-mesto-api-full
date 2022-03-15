@@ -12,3 +12,5 @@ export const selectorFormAddCard = '.form_type_add'; //селектор форм
 export const selectorFormEdit = '.form_type_edit';// селектор формы редактирования
 export const selectorFormEditAvatar = '.form_type_edit-avatar';// селектор формы редактирования фото профиля
 export const selectorAvatarProfile = '.profile__image'//селектор изображения профиля
+
+export const BASE_URL = 'http://localhost:3000';

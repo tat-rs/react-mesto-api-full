@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.mesto22.nomoredomains.work';
+import { BASE_URL } from './constants.js';
 
 //класс запроса к серверу
 class Api {
@@ -22,6 +22,7 @@ class Api {
   register(email, password) {
     return fetch(`${this._url}/signup`, {
       method: "POST",
+      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({email, password})
     })
@@ -32,6 +33,7 @@ class Api {
   authorize(email, password) {
     return fetch(`${this._url}/signin`, {
       method: "POST",
+      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({email, password})
     })
@@ -39,10 +41,22 @@ class Api {
   };
 
   //проверка токена
-  getContent(token) {
+  getContent() {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
-      headers: {...this.headers, 'Authorization': `Bearer ${token}`}
+      credentials: "include",
+      headers: this.headers,
+      /* headers: {...this.headers, 'Authorization': `Bearer ${token}`} */
+    })
+    .then(this._checkResponse)
+  }
+
+  //выход из системы
+  logout() {
+    return fetch(`${this._url}/logout`, {
+      method: "GET",
+      credentials: "include",
+      headers: this.headers,
     })
     .then(this._checkResponse)
   }

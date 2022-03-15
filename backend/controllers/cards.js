@@ -14,7 +14,7 @@ const {
 const getCards = (req, res, next) => {
   Card.find({})
     .populate('owner')
-    .then((cards) => res.status(SUCCESS_CODE_OK).send({ data: cards }))
+    .then((cards) => res.status(SUCCESS_CODE_OK).send(cards))
     .catch((err) => {
       next(err);
     });
@@ -27,9 +27,9 @@ const createCard = (req, res, next) => {
     throw new BadRequestError('Не указаны название и/или ссылка карточки');
   }
 
-  Card.create({ name, link, owner: req.user._id })
+  const newCard = Card.create({ name, link, owner: req.user._id })
     .then((card) => {
-      res.status(SUCCESS_CODE_CREATED).send({ data: card });
+      res.status(SUCCESS_CODE_CREATED).send(card);
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
@@ -38,6 +38,8 @@ const createCard = (req, res, next) => {
         next(err);
       }
     });
+
+  return newCard.populate('owner');
 };
 
 const deleteCardById = (req, res, next) => {
@@ -48,7 +50,7 @@ const deleteCardById = (req, res, next) => {
       } else if (String(card.owner) === String(req.user._id)) {
         Card.findByIdAndRemove(req.params.cardId)
           .then((deletedCard) => {
-            res.status(SUCCESS_CODE_OK).send({ data: deletedCard });
+            res.status(SUCCESS_CODE_OK).send(deletedCard);
           })
           .catch((err) => {
             next(err);
@@ -70,7 +72,7 @@ const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
     .then((card) => {
       if (card) {
-        res.status(SUCCESS_CODE_OK).send({ data: card });
+        res.status(SUCCESS_CODE_OK).send(card);
       } else {
         throw new NotFoundError('Передан несуществующий _id карточки');
       }
@@ -88,7 +90,7 @@ const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
     .then((card) => {
       if (card) {
-        res.status(SUCCESS_CODE_OK).send({ data: card });
+        res.status(SUCCESS_CODE_OK).send(card);
       } else {
         throw new NotFoundError('Передан несуществующий _id карточки');
       }

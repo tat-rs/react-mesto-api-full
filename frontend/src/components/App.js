@@ -30,7 +30,13 @@ function App() {
 
   const [selectedCard, setSelectedCard] = React.useState({}) //состояние попапа с изображением
 
-  const [currentUser, setCurrentUser] = React.useState({}); //стейт текущих данных пользователя
+  const [currentUser, setCurrentUser] = React.useState({
+      about: "",
+      avatar: "",
+      cohort: "",
+      name: "",
+      _id: "",
+  }); //стейт текущих данных пользователя
 
   const [cards, setCards] = React.useState([]);//хук состояния карточки 
 
@@ -105,37 +111,33 @@ function App() {
   }
 
   React.useEffect(() => {
-    // Отправляем запрос в API и получаем первоначальный массив карточек
-    api.getAllCards()
-    .then((cardData) => {
-      setCards(cardData)
-    })
-    .catch(err => console.log(err))
 
-    //Отправляем запрос в API и получаем обновлённые данные пользователя
-    api.getUserInfo()
-    .then((userData) => {
-      setCurrentUser(userData); //обновили данные текущего пользователя
-    })
-    .catch(err => console.log(err))
+    if(isLoggedIn) {
+      Promise.all([api.getAllCards(), api.getUserInfo()])
+        .then(([cardData, userData]) => {
+          setCards(cardData);
+          setCurrentUser(userData);
+        })
+        .catch(err => console.log(err))
+    }
 
     tokenCheck();//проверка токена
     
-  }, [])
+  }, [isLoggedIn])
 
   //проверка токена пользователя
   function tokenCheck() {
-    const token = localStorage.getItem('token'); //сохранили токен
-    if(token){
-      auth.getContent(token)
+    /* const token = localStorage.getItem('token'); //сохранили токен
+    if(token){ */
+      auth.getContent()
         .then((data) => data)
         .then((res) => {
-          handleUserEmail(res.data.email); //обновили стейт эл. почты пользователя
+          handleUserEmail(res.email); //обновили стейт эл. почты пользователя
           handleLogin(); //обновлен статус пользователя - зарегистрирован
           history.push('/'); //переадресация на страницу пользователя
         })
         .catch(err => console.log(err))
-    }
+    /* } */
   }
 
   //обработчик модального окна успешной/неуспешной регистрации
@@ -167,8 +169,7 @@ function App() {
 
   //функция постановки лайка/дизлайк
   function handleCardLike(card) {
-    const isLiked = card.likes.some(element => element._id === currentUser._id); // проверяем, поставлен ли лайк пользователем на карточке
-    
+    const isLiked = card.likes.some(element => element === currentUser._id); // проверяем, поставлен ли лайк пользователем на карточке
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked)
     .then((newCard) => {
@@ -193,6 +194,7 @@ function App() {
     // Отправляем запрос в API и получаем обновлённый массив карточек
     api.addNewCard(card)
     .then((newAddPlace) => {
+      console.log(newAddPlace)
       setCards([newAddPlace, ...cards]); //обновили стейт карточек
       closeAllPopups();
     })
@@ -204,9 +206,10 @@ function App() {
 
     auth.authorize(userEmail, userPassword)
       .then((data) => {
+        console.log(userEmail)
         if(data.token) {
           handleUserEmail(userEmail); //сохранили эл. почту пользователя в стейт
-          /* localStorage.setItem('token', data.token);//сохранили токен */
+          /* localStorage.setItem('token', userEmail);//сохранили токен */
           handleLogin();//статус пользователя - зарегистрирован
           history.push('/'); //переадресация на основную страницу
         } else {
@@ -238,7 +241,10 @@ function App() {
   
   //функция выхода из системы
   function signOutClick(){
-    localStorage.removeItem('token'); //удалили токен
+    auth.logout()
+      .then((res => console.log))
+      .catch(err => console.log(err))
+    /* localStorage.removeItem('token'); //удалили токен */
     setLoggedIn(false); // обновили статус пользователя
     history.push('/sign-in');//переадресация на странцицу входа
   }

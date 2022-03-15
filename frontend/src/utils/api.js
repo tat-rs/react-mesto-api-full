@@ -1,3 +1,5 @@
+import { BASE_URL } from './constants.js';
+
 //класс запроса к серверу
 class Api {
   constructor({url, headers}) {
@@ -15,8 +17,9 @@ class Api {
 
    //метод, получающий список всех карточек с сервера
   getAllCards() {
-    return fetch(`${this._url}cards`, {
+    return fetch(`${this._url}/cards`, {
       method: "GET",
+      credentials: "include",
       headers: this._headers,
     })
     .then(this._checkResponse)
@@ -24,8 +27,9 @@ class Api {
 
   //получаем данные пользователя
   getUserInfo() {
-    return fetch(`${this._url}users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: "GET",
+      credentials: "include",
       headers: this._headers,
     })
     .then(this._checkResponse)
@@ -33,8 +37,9 @@ class Api {
 
   //метод редактирования данных пользователя
   setUserInfo(info) {
-    return fetch(`${this._url}users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: "PATCH",
+      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
         name: info.name,
@@ -46,8 +51,9 @@ class Api {
 
   //метод редактирования фото профиля
   setUserAvatar(user) {
-    return fetch(`${this._url}users/me/avatar/`, {
+    return fetch(`${this._url}/users/me/avatar/`, {
       method: "PATCH",
+      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
         avatar: user.avatar,
@@ -58,10 +64,12 @@ class Api {
 
   //метод добавления новой карточки на страницу
   addNewCard(newCard) {
-    return fetch(`${this._url}cards`, {
+    return fetch(`${this._url}/cards`, {
       method: "POST",
+      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
+        /* _id: newCard._id, */
         name: newCard.subtitle, //новое описание
         link: newCard.link, //новая ссыока
       })
@@ -71,8 +79,9 @@ class Api {
 
   //метод постановки лайка и дизлайка
   changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${this._url}cards/likes/${cardId}`, {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: isLiked ? "PUT" : "DELETE",
+      credentials: "include",
       headers: this._headers,
     })
     .then(this._checkResponse)
@@ -80,8 +89,9 @@ class Api {
 
   //метод удаления карточки со страницы
   deleteCard(cardId) {
-    return fetch(`${this._url}cards/${cardId}`, {
+    return fetch(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
+      credentials: "include",
       headers: this._headers,
     })
     .then(this._checkResponse)
@@ -90,7 +100,7 @@ class Api {
 }
  
 const api = new Api({
-  url: 'https://api.mesto22.nomoredomains.work',
+  url: BASE_URL,
   headers: {
     "content-type": "application/json",
   }

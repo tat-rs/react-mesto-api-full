@@ -10,7 +10,7 @@ const userRouter = express.Router();
 
 const {
 
-  getUsers, getUserById, uptadeUserProfile, uptadeUserAvatar, getUserMe,
+  getUsers, getUserById, uptadeUserProfile, uptadeUserAvatar, getUserMe, logout,
 
 } = require('../controllers/users');
 
@@ -23,5 +23,7 @@ userRouter.get('/users/:userId', validateUserdId, getUserById);
 userRouter.patch('/users/me', validateUptadeProfile, uptadeUserProfile);
 
 userRouter.patch('/users/me/avatar', validateUptadeAvatar, uptadeUserAvatar);
+
+userRouter.get('/logout', logout);
 
 module.exports = userRouter;

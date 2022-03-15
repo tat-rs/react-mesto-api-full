@@ -29,7 +29,7 @@ const getUserMe = (req, res, next) => {
   User.findById({ _id: req.user._id })
     .then((user) => {
       if (user) {
-        res.status(SUCCESS_CODE_OK).send({ data: user });
+        res.status(SUCCESS_CODE_OK).send(user);
       } else {
         throw new NotFoundError('Пользователь с таким id не найден');
       }
@@ -43,7 +43,7 @@ const getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (user) {
-        res.status(SUCCESS_CODE_OK).send({ data: user });
+        res.status(SUCCESS_CODE_OK).send(user);
       } else {
         throw new NotFoundError('Пользователь с таким id не найден');
       }
@@ -70,11 +70,7 @@ const createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
-    .then(() => res.status(SUCCESS_CODE_CREATED).send({
-      data: {
-        name, about, avatar, email,
-      },
-    }))
+    .then(() => res.status(SUCCESS_CODE_CREATED).send(name, about, avatar, email))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError(`Переданы некорректные данные${err.errors.email ? `: ${err.errors.email.message}` : ''}`));
@@ -96,7 +92,7 @@ const uptadeUserProfile = (req, res, next) => {
   return User.findByIdAndUpdate(req.user._id, { name, about }, optionsOfData)
     .then((user) => {
       if (user) {
-        res.status(SUCCESS_CODE_OK).send({ data: user });
+        res.status(SUCCESS_CODE_OK).send(user);
       } else {
         throw new NotFoundError('Пользователь с таким id не найден');
       }
@@ -120,7 +116,7 @@ const uptadeUserAvatar = (req, res, next) => {
   return User.findByIdAndUpdate(req.user._id, { avatar }, optionsOfData)
     .then((user) => {
       if (user) {
-        res.status(SUCCESS_CODE_OK).send({ data: user });
+        res.status(SUCCESS_CODE_OK).send(user);
       } else {
         throw new NotFoundError('Пользователь с таким id не найден');
       }
@@ -159,6 +155,11 @@ const login = (req, res, next) => {
     });
 };
 
+const logout = (req, res) => {
+  res.clearCookie('jwt');
+  res.status(SUCCESS_CODE_OK).send('Вы вышли из системы');
+};
+
 module.exports = {
   getUsers,
   getUserMe,
@@ -167,4 +168,5 @@ module.exports = {
   uptadeUserProfile,
   uptadeUserAvatar,
   login,
+  logout,
 };

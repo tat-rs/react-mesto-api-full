@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
@@ -19,15 +20,20 @@ const app = express();
 
 const { PORT = 3000 } = process.env;
 
+app.use(cookieParser());
+
 app.use(express.json());
+
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true,
+}));
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(requestLogger);
 
 app.post('/signup', validateRegister, createUser);
-
-app.use(cookieParser());
 
 app.post('/signin', validateLogin, login);
 

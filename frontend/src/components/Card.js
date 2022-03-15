@@ -29,10 +29,11 @@ function Card(props) {
 
   const cardDeleteButtonClassName = (`cards__delete ${isOwner ? 'cards__delete_visible' : ''}`); // определяем класс кнопки удаления
 
-  const isLiked = props.card.likes.some(i => i._id === currentUserData._id); // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
+  const isLiked = props.card.likes.some(i => i === currentUserData._id); // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
 
   const cardLikeButtonClassName = (`cards__button ${isLiked ? 'cards__button_active' : ''}`); // определяем класс для кнопки лайка
-  
+
+  /* console.log(props.card) */
   return (
     <>
       <li className='cards__item'>
