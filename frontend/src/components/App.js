@@ -127,17 +127,18 @@ function App() {
 
   //проверка токена пользователя
   function tokenCheck() {
-    /* const token = localStorage.getItem('token'); //сохранили токен
-    if(token){ */
+    const email = localStorage.getItem('email'); //сохранили почту
+    if(email){
       auth.getContent()
         .then((data) => data)
         .then((res) => {
+          if(res?.email)
           handleUserEmail(res.email); //обновили стейт эл. почты пользователя
           handleLogin(); //обновлен статус пользователя - зарегистрирован
           history.push('/'); //переадресация на страницу пользователя
         })
         .catch(err => console.log(err))
-    /* } */
+    }
   }
 
   //обработчик модального окна успешной/неуспешной регистрации
@@ -206,10 +207,8 @@ function App() {
 
     auth.authorize(userEmail, userPassword)
       .then((data) => {
-        console.log(userEmail)
         if(data.token) {
-          handleUserEmail(userEmail); //сохранили эл. почту пользователя в стейт
-          /* localStorage.setItem('token', userEmail);//сохранили токен */
+          handleUserEmail(localStorage.setItem('email', userEmail));//сохранили эл. почту пользователя
           handleLogin();//статус пользователя - зарегистрирован
           history.push('/'); //переадресация на основную страницу
         } else {
@@ -242,9 +241,10 @@ function App() {
   //функция выхода из системы
   function signOutClick(){
     auth.logout()
-      .then((res => console.log))
-      .catch(err => console.log(err))
-    /* localStorage.removeItem('token'); //удалили токен */
+      .then(res => res)
+      .catch(err => console.log(err));
+
+    localStorage.removeItem('email'); //удалили токен
     setLoggedIn(false); // обновили статус пользователя
     history.push('/sign-in');//переадресация на странцицу входа
   }

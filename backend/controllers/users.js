@@ -157,7 +157,7 @@ const login = (req, res, next) => {
 
 const logout = (req, res) => {
   res.clearCookie('jwt');
-  res.status(SUCCESS_CODE_OK).send('Вы вышли из системы');
+  res.status(SUCCESS_CODE_OK).json('Пользователь из системы');
 };
 
 module.exports = {
