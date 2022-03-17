@@ -195,7 +195,6 @@ function App() {
     // Отправляем запрос в API и получаем обновлённый массив карточек
     api.addNewCard(card)
     .then((newAddPlace) => {
-      console.log(newAddPlace)
       setCards([newAddPlace, ...cards]); //обновили стейт карточек
       closeAllPopups();
     })

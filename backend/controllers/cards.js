@@ -14,22 +14,31 @@ const {
 const getCards = (req, res, next) => {
   Card.find({})
     .populate('owner')
-    .then((cards) => res.status(SUCCESS_CODE_OK).send(cards))
+    .then((cards) => {
+      res.status(SUCCESS_CODE_OK).send(cards);
+    })
     .catch((err) => {
       next(err);
     });
 };
 
-const createCard = (req, res, next) => {
+const createCard = async (req, res, next) => {
   const { name, link } = req.body;
 
   if (!name || !link) {
     throw new BadRequestError('Не указаны название и/или ссылка карточки');
   }
 
-  const newCard = Card.create({ name, link, owner: req.user._id })
+  Card.create({ name, link, owner: req.user._id })
     .then((card) => {
-      res.status(SUCCESS_CODE_CREATED).send(card);
+      Card.findById(card._id)
+        .populate('owner')
+        .then((newCard) => {
+          res.status(SUCCESS_CODE_CREATED).send(newCard);
+        })
+        .catch((err) => {
+          next(err);
+        });
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
@@ -38,8 +47,6 @@ const createCard = (req, res, next) => {
         next(err);
       }
     });
-
-  return newCard.populate('owner');
 };
 
 const deleteCardById = (req, res, next) => {
