@@ -13,4 +13,4 @@ export const selectorFormEdit = '.form_type_edit';// селектор формы
 export const selectorFormEditAvatar = '.form_type_edit-avatar';// селектор формы редактирования фото профиля
 export const selectorAvatarProfile = '.profile__image'//селектор изображения профиля
 
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'http://api.mesto22.nomoredomains.work';
