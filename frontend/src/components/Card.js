@@ -25,7 +25,7 @@ function Card(props) {
 
   const currentUserData = React.useContext(CurrentUserContext); // подписались на контекст текущих данных пользователя
   
-  const isOwner = props.card.owner._id === currentUserData._id; // определяем является ли пользователем текущим
+  const isOwner = props.card.owner ? props.card.owner._id === currentUserData._id : false; // определяем является ли пользователем текущим
 
   const cardDeleteButtonClassName = (`cards__delete ${isOwner ? 'cards__delete_visible' : ''}`); // определяем класс кнопки удаления
 
@@ -33,9 +33,8 @@ function Card(props) {
 
   const cardLikeButtonClassName = (`cards__button ${isLiked ? 'cards__button_active' : ''}`); // определяем класс для кнопки лайка
 
-  /* console.log(props.card) */
   return (
-    <>
+    <> 
       <li className='cards__item'>
         <button className={cardDeleteButtonClassName} type='button' aria-label='Удалить' onClick={handleDeleteClick}></button>
         <img className='cards__image' src={`${props.card.link}`} alt={`${props.card.name}`} onClick={handleClick} />

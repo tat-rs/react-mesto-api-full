@@ -46,7 +46,6 @@ class Api {
       method: "GET",
       credentials: "include",
       headers: this.headers,
-      /* headers: {...this.headers, 'Authorization': `Bearer ${token}`} */
     })
     .then(this._checkResponse)
   }

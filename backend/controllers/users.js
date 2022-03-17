@@ -70,7 +70,9 @@ const createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
-    .then(() => res.status(SUCCESS_CODE_CREATED).send(name, about, avatar, email))
+    .then(() => res.status(SUCCESS_CODE_CREATED).send({
+      name, about, avatar, email,
+    }))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError(`Переданы некорректные данные${err.errors.email ? `: ${err.errors.email.message}` : ''}`));
@@ -157,7 +159,7 @@ const login = (req, res, next) => {
 
 const logout = (req, res) => {
   res.clearCookie('jwt');
-  res.status(SUCCESS_CODE_OK).json('Пользователь из системы');
+  res.status(SUCCESS_CODE_OK).json('Пользователь вышел из системы');
 };
 
 module.exports = {

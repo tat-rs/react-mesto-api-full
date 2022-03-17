@@ -225,8 +225,8 @@ function App() {
     auth.register(userEmail, userPassword)
       .then((res) => {
         if(res) {
-          handleInfoTooltipClick(); //открытие модального окна
           setSuccess(true); //сообщение об успешной регистраци
+          handleInfoTooltipClick(); //открытие модального окна
           history.push('/sign-in');
         } else {
           handleInfoTooltipClick(); //открытие модального окна

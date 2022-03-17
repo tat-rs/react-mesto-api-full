@@ -42,13 +42,13 @@ function Header(props) {
 
         <Route path='/sign-up'>
           <div className='header__container'>
-            <Link to='/sign-in' className='header__link-push link' onClick={signOut}>Войти</Link>
+            <Link to='/sign-in' className='header__link-push link'>Войти</Link>
           </div>
         </Route>
 
         <Route path='/sign-in'>
           <div className='header__container'>
-            <Link to='/sign-up' className='header__link-push link header__link-push_color_grey' onClick={signOut}>Регистрация</Link>
+            <Link to='/sign-up' className='header__link-push link header__link-push_color_grey'>Регистрация</Link>
           </div>
         </Route>
 
