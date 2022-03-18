@@ -69,7 +69,6 @@ class Api {
       credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
-        /* _id: newCard._id, */
         name: newCard.subtitle, //новое описание
         link: newCard.link, //новая ссыока
       })
