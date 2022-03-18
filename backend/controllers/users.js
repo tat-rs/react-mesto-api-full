@@ -19,6 +19,8 @@ const optionsOfData = {
   runValidators: true,
 };
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.status(SUCCESS_CODE_OK).send({ data: users }))
@@ -143,12 +145,13 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'some-secret-key',
+        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
+        domains: '.localhost:3001',
       });
       res.send({ token });
     })
