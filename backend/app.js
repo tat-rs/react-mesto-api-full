@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use(cors({
-  origin: 'http://localhost:3001',
+  origin: ['http://mesto22.nomoredomains.work', 'https://mesto22.nomoredomains.work'],
   credentials: true,
 }));
 
