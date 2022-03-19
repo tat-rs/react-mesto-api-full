@@ -42,17 +42,47 @@ function App() {
 
   const [isLoggedIn, setLoggedIn] = React.useState(false); //стейт, содержащий инф-ию о статусе пользователя
 
-  const [email, setEmail] = React.useState(''); //стейт, эл. почты пользователя
-
   const [isInfoToolTipOpen, setInfoToolTipOpen] = React.useState(false); //состояние попапа результата регистрации
 
   const [isSuccess, setSuccess] = React.useState(false); //состояние переменной об успешной/неуспешной регистрации
 
   const [isMenuOpen, setMenuOpen] = React.useState(false); //состояние переменной открытия меню
 
-  const {lockScroll, unlockScroll} = useScrollLock(); //скролл и отмена скролла 
+  const {lockScroll, unlockScroll} = useScrollLock(); //скролл и отмена скролла
+
+  const userEmail = localStorage.getItem('email');
 
   const history = useHistory();
+
+  //проверка токена пользователя
+  function tokenCheck() {
+    if(userEmail){
+      auth.getContent()
+        .then((data) => data)
+        .then((res) => {
+          if(res?.email)
+          localStorage.setItem('email', res.email); //обновили стейт эл. почты пользователя
+          handleLogin(); //обновлен статус пользователя - зарегистрирован
+          history.push('/'); //переадресация на страницу пользователя
+        })
+        .catch(err => console.log(err))
+    }
+  }
+
+  React.useEffect(() => {
+
+    if(isLoggedIn && userEmail) {
+      Promise.all([api.getAllCards(), api.getUserInfo()])
+        .then(([cardData, userData]) => {
+          setCards(cardData);
+          setCurrentUser(userData);
+        })
+        .catch(err => console.log(err))
+    }
+ 
+    tokenCheck();//проверка токена
+    
+  }, [isLoggedIn])
   
   //обработчик открытия попапа редактирования аватара профиля
   function handleEditAvatarClick() {
@@ -89,11 +119,6 @@ function App() {
     setLoggedIn(true)
   }
 
-  //обработчик эл. почты пользователя
-  function handleUserEmail(userEmail) {
-    setEmail(userEmail)
-  }
-
   function handleMenuClick() {
     setMenuOpen(!isMenuOpen)
   }
@@ -108,37 +133,6 @@ function App() {
     setIsPopupConfirmationOpen(false)
     unlockScroll()
     setMenuOpen(false)
-  }
-
-  React.useEffect(() => {
-
-    if(isLoggedIn) {
-      Promise.all([api.getAllCards(), api.getUserInfo()])
-        .then(([cardData, userData]) => {
-          setCards(cardData);
-          setCurrentUser(userData);
-        })
-        .catch(err => console.log(err))
-    }
-
-    tokenCheck();//проверка токена
-    
-  }, [isLoggedIn])
-
-  //проверка токена пользователя
-  function tokenCheck() {
-    const email = localStorage.getItem('email'); //сохранили почту
-    if(email){
-      auth.getContent()
-        .then((data) => data)
-        .then((res) => {
-          if(res?.email)
-          handleUserEmail(res.email); //обновили стейт эл. почты пользователя
-          handleLogin(); //обновлен статус пользователя - зарегистрирован
-          history.push('/'); //переадресация на страницу пользователя
-        })
-        .catch(err => console.log(err))
-    }
   }
 
   //обработчик модального окна успешной/неуспешной регистрации
@@ -206,8 +200,8 @@ function App() {
 
     auth.authorize(userEmail, userPassword)
       .then((data) => {
-        if(data.token) {
-          handleUserEmail(localStorage.setItem('email', userEmail));//сохранили эл. почту пользователя
+        if(data?.token) {
+          localStorage.setItem('email', userEmail);//сохранили эл. почту пользователя
           handleLogin();//статус пользователя - зарегистрирован
           history.push('/'); //переадресация на основную страницу
         } else {
@@ -252,7 +246,7 @@ function App() {
     <div className='page__content'>
       <CurrentUserContext.Provider value={currentUser}>
 
-      <Header isLoggedIn={isLoggedIn} useremail={email} signOutClick={signOutClick} handleMenuClick={handleMenuClick} closeAllPopups={closeAllPopups} isMenuOpen={isMenuOpen} />
+      <Header isLoggedIn={isLoggedIn} useremail={userEmail} signOutClick={signOutClick} handleMenuClick={handleMenuClick} closeAllPopups={closeAllPopups} isMenuOpen={isMenuOpen} />
       
         <Switch>
 
