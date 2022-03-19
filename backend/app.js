@@ -27,6 +27,8 @@ app.use(express.json());
 const allowedCors = [
   'https://mesto22.nomoredomains.work',
   'http://mesto22.nomoredomains.work',
+  'https://mesto22.nomoredomains.work/',
+  'http://mesto22.nomoredomains.work/',
 ];
 
 const DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE';
