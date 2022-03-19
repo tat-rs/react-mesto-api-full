@@ -4,6 +4,8 @@ const { errors } = require('celebrate');
 
 const cookieParser = require('cookie-parser');
 
+const cors = require('cors');
+
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const {
@@ -24,35 +26,10 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-const allowedCors = [
-  'https://mesto22.nomoredomains.work',
-  'http://mesto22.nomoredomains.work',
-  'https://mesto22.nomoredomains.work/',
-  'http://mesto22.nomoredomains.work/',
-];
-
-const DEFAULT_ALLOWED_METHODS = 'GET, HEAD, PUT, PATCH, POST, DELETE';
-
-app.use((req, res, next) => {
-  const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
-  const { method } = req; // Сохраняем тип запроса (HTTP-метод) в соответствующую переменную
-  const requestHeaders = req.headers['access-control-request-headers'];
-  res.header('Access-Control-Allow-Credentials', true);
-  // Значение для заголовка Access-Control-Allow-Methods по умолчанию (разрешены все типы запросов)
-
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-    // завершаем обработку запроса и возвращаем результат клиенту
-    return res.end();
-  }
-
-  return next();
-});
+app.use(cors({
+  origin: ['http://mesto22.nomoredomains.work', 'https://mesto22.nomoredomains.work'],
+  credentials: true,
+}));
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
