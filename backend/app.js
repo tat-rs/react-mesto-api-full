@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use(cors({
-  origin: ['https://mesto22.nomoredomains.work', 'http://mesto22.nomoredomains.work'],
+  origin: 'http://mesto22.nomoredomains.work',
   credentials: true,
 }));
 

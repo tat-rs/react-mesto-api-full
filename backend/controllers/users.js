@@ -153,7 +153,7 @@ const login = (req, res, next) => {
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        domain: '.mesto22.nomoredomains.work',
+        domains: '.mesto22.nomoredomains.work',
       });
       res.send({ token });
     })
