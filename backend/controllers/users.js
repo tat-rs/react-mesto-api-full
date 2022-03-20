@@ -161,9 +161,8 @@ const login = (req, res, next) => {
     });
 };
 
-const logout = (req, res) => {
-  res.clearCookie('jwt');
-  res.status(SUCCESS_CODE_OK).send({ message: 'Пользователь вышел из системы' });
+const signout = (req, res) => {
+  res.status(SUCCESS_CODE_OK).clearCookie('jwt').send({ message: 'Пользователь вышел из системы' });
 };
 
 module.exports = {
@@ -174,5 +173,5 @@ module.exports = {
   uptadeUserProfile,
   uptadeUserAvatar,
   login,
-  logout,
+  signout,
 };

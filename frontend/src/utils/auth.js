@@ -52,7 +52,7 @@ class Api {
 
   //выход из системы
   logout() {
-    return fetch(`${this._url}/logout`, {
+    return fetch(`${this._url}/signout`, {
       method: "GET",
       credentials: "include",
       headers: this.headers,

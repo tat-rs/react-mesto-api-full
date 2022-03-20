@@ -12,6 +12,7 @@ const cardRouter = require('./routes/cards');
 const {
   createUser,
   login,
+  signout,
 } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorsHandler');
@@ -52,11 +53,13 @@ app.use(userRouter);
 
 app.use(cardRouter);
 
-app.use(errorLogger);
+app.get('/signout', signout);
 
 app.use((req, res, next) => {
   next(new NotFoundError('Страница по указанному маршруту не найдена'));
 });
+
+app.use(errorLogger);
 
 app.use(errors());
 
