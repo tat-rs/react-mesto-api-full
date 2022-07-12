@@ -13,6 +13,7 @@ const {
   SUCCESS_CODE_OK,
   SUCCESS_CODE_CREATED,
   SOLT_ROUND,
+  DOMAINS,
 } = require('../utils/utils');
 
 const optionsOfData = {
@@ -152,7 +153,9 @@ const login = (req, res, next) => {
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        domains: '.mesto22.nomoredomains.work',
+        sameSite: 'strict',
+        secure: true,
+        domains: DOMAINS,
       });
       res.send({ token });
     })

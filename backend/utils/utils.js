@@ -9,6 +9,21 @@ const SUCCESS_CODE_CREATED = 201;
 
 const SOLT_ROUND = 10;
 
+const MAIN_URLS = [
+  'https://tat-rs.github.io/',
+  'https://tat-rs.github.io',
+  'http://localhost:3000',
+  'http://localhost:3000/',
+  'http://localhost:3001',
+  'http://localhost:3001/',
+];
+
+const DOMAINS = [
+  '.tat-rs.github.io',
+  '.localhost:3000',
+  '.localhost:3001',
+];
+
 module.exports = {
   ERROR_CODE_NOCORRECT,
   ERROR_UNAUTHORIZATED,
@@ -19,4 +34,6 @@ module.exports = {
   SUCCESS_CODE_OK,
   SUCCESS_CODE_CREATED,
   SOLT_ROUND,
+  MAIN_URLS,
+  DOMAINS,
 };
