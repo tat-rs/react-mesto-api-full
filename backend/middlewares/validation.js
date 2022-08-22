@@ -12,7 +12,7 @@ const validateRegister = celebrate({
       }),
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30).default('Жак-Ив Кусто'),
-    about: Joi.string().min(2).max(30).default('Исследователь'),
+    about: Joi.string().min(2).max(200).default('Исследователь'),
     avatar: Joi.string().default('https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png')
       .custom((value, helpers) => {
         if (validator.isURL(value)) {
@@ -39,7 +39,7 @@ const validateLogin = celebrate({
 const validateUptadeProfile = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    about: Joi.string().required().min(2).max(30),
+    about: Joi.string().required().min(2).max(200),
   }),
 });
 

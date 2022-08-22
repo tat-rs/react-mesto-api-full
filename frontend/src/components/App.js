@@ -72,8 +72,6 @@ function App() {
     }
   }
 
-  console.log(currentUser)
-
   React.useEffect(() => {
 
     if(isLoggedIn && userEmail) {
