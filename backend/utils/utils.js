@@ -10,8 +10,8 @@ const SUCCESS_CODE_CREATED = 201;
 const SOLT_ROUND = 10;
 
 const MAIN_URLS = [
-  'https://tat-rs.github.io/',
-  'https://tat-rs.github.io',
+  'https://mesto22.herokuapp.com/',
+  'https://mesto22.herokuapp.com',
   'http://localhost:3000',
   'http://localhost:3000/',
   'http://localhost:3001',
@@ -19,7 +19,7 @@ const MAIN_URLS = [
 ];
 
 const DOMAINS = [
-  '.tat-rs.github.io',
+  '.mesto22.herokuapp.com',
   '.localhost:3000',
   '.localhost:3001',
 ];

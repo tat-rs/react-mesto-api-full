@@ -30,7 +30,7 @@
 
 ## Ссылки
 
-<a href="https://tat-rs.github.io/react-mesto-api-full" target="_blank" rel="noopener">Ссылка на сайт в GitHub Pages</a>  
+<a href="https://mesto22.herokuapp.com/" target="_blank" rel="noopener">Ссылка на сайт</a>  
 
 <a href="https://mesto-api22.herokuapp.com" target="_blank" rel="noopener">Ссылка на сервер https://mesto-api22.herokuapp.com</a>
   
