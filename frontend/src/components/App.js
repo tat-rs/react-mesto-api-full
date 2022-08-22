@@ -17,6 +17,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import auth from '../utils/auth';
 import {useScrollLock} from '../hooks/useScrollLock'
+import { ERROR_LOGIN, ERROR_REGISTER } from '../utils/constants';
 
 function App() {
 
@@ -48,6 +49,8 @@ function App() {
 
   const [isMenuOpen, setMenuOpen] = React.useState(false); //состояние переменной открытия меню
 
+  const [message, setMessage] = React.useState(''); //текст сообщения при регистрации и входе
+
   const {lockScroll, unlockScroll} = useScrollLock(); //скролл и отмена скролла
 
   const userEmail = localStorage.getItem('email');
@@ -69,6 +72,8 @@ function App() {
     }
   }
 
+  console.log(currentUser)
+
   React.useEffect(() => {
 
     if(isLoggedIn && userEmail) {
@@ -82,8 +87,8 @@ function App() {
  
     tokenCheck();//проверка токена
     
-  }, [isLoggedIn])
-  
+  }, [isLoggedIn, userEmail])
+
   //обработчик открытия попапа редактирования аватара профиля
   function handleEditAvatarClick() {
     lockScroll()
@@ -205,13 +210,12 @@ function App() {
           handleLogin();//статус пользователя - зарегистрирован
           history.push('/'); //переадресация на основную страницу
         } else {
-          return
+          handleInfoTooltipClick(); //открытие модального окна с ошибкой
+          setSuccess(false);
+          setMessage(ERROR_LOGIN);
         }
       })
-      .catch(() => {
-        handleInfoTooltipClick(); //открытие модального окна с ошибкой
-        setSuccess(false);
-      })
+      .catch((err) => console.log(err));
   }
 
   function onRegister(userEmail, userPassword) {
@@ -225,6 +229,7 @@ function App() {
         } else {
           handleInfoTooltipClick(); //открытие модального окна
           setSuccess(false); //сообщение о проблеме при регистраци
+          setMessage(ERROR_REGISTER);
         }
       })
       .catch((err) => console.log(err));
@@ -280,7 +285,7 @@ function App() {
 
         </Switch>
 
-        <InfoToolTip isOpen={isInfoToolTipOpen} onClose={closeAllPopups} isSuccess={isSuccess}/>
+        <InfoToolTip isOpen={isInfoToolTipOpen} onClose={closeAllPopups} isSuccess={isSuccess} message={message} />
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} textOfButton='Сохранить'/>
 

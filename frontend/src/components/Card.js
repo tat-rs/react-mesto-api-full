@@ -2,6 +2,8 @@ import React from "react";
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 function Card(props) {
+
+  const currentUserData = React.useContext(CurrentUserContext); // подписались на контекст текущих данных пользователя
     
   //сохранение данных карточки при клике
   function handleClick() {
@@ -22,10 +24,8 @@ function Card(props) {
       _id: props.card._id,
     })
   }
-
-  const currentUserData = React.useContext(CurrentUserContext); // подписались на контекст текущих данных пользователя
   
-  const isOwner = props.card.owner ? props.card.owner._id === currentUserData._id : false; // определяем является ли пользователем текущим
+  const isOwner = props.card.owner && props.card.owner._id ? (props.card.owner._id === currentUserData._id || false) : (props.card.owner === currentUserData._id || false); // определяем является ли пользователем текущим
 
   const cardDeleteButtonClassName = (`cards__delete ${isOwner ? 'cards__delete_visible' : ''}`); // определяем класс кнопки удаления
 

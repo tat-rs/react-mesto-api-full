@@ -84,7 +84,6 @@
 @import url(./blocks/form/__item/_color/form__item_color_white.css);
 @import url(./blocks/form/__error/form__error.css);
 @import url(./blocks/form/__button/form__button.css);
-@import url(./blocks/form/__button/_disabled/form__button_disabled.css);
 @import url(./blocks/form/__button/_place/form__button_place_new-card.css);
 @import url(./blocks/form/__button/_place/form__button_place_delete.css);
 @import url(./blocks/form/__button/_color/form__button_color_white.css);

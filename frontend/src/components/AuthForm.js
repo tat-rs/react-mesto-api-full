@@ -22,7 +22,7 @@ function AuthForm(props) {
           <input className='form__item form__item_color_white' id='password' type='password' name='password' placeholder='Пароль' value={values.password || ''} onChange={handleChange} required />
           <span className="form__error">{!isValid && errors.password}</span>
         </div>
-          <button className='form__button form__button_color_white' type='submit'>{props.textOfButton}</button>
+          <button className='form__button form__button_color_white' type='submit' disabled={!isValid}>{props.textOfButton}</button>
       </form>
     </>
   )

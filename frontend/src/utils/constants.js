@@ -13,4 +13,10 @@ export const selectorFormEdit = '.form_type_edit';// селектор формы
 export const selectorFormEditAvatar = '.form_type_edit-avatar';// селектор формы редактирования фото профиля
 export const selectorAvatarProfile = '.profile__image'//селектор изображения профиля
 
+export const ERROR_LOGIN = 'Пользователь с таким email еще не зарегистрирован';
+
+export const ERROR_REGISTER = 'Пользователь с таким email уже зарегистрирован';
+
+export const SUCCESS_REGISTER = 'Вы успешно зарегистрировались!';
+
 export const BASE_URL = 'https://mesto-api22.herokuapp.com';

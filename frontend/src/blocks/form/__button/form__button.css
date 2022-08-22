@@ -18,6 +18,15 @@
   opacity: .85;
 }
 
+.form__button:disabled {
+  opacity: .6;
+  pointer-events: none;
+  background-color: #F8F8F8;
+  color: #C2C2C2;
+  cursor: auto;
+}
+
+
 @media (max-width:590px) {
   .form__button {
     padding: 12px 82px;
