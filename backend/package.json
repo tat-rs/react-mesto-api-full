@@ -2,10 +2,13 @@
   "name": "express-mesto",
   "version": "1.0.0",
   "description": "сервер для Mesto",
-  "main": "app.js",
+  "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "lint": "npx eslint ."
   },
   "repository": {

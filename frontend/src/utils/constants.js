@@ -19,4 +19,4 @@ export const ERROR_REGISTER = 'Пользователь с таким email уж
 
 export const SUCCESS_REGISTER = 'Вы успешно зарегистрировались!';
 
-export const BASE_URL = 'https://mesto-api22.herokuapp.com';
+export const BASE_URL = 'https://api-mesto-tat-rs.vercel.app';

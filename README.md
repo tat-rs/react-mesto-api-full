@@ -30,7 +30,7 @@
 
 ## Ссылки
 
-<a href="https://mesto22.herokuapp.com/" target="_blank" rel="noopener">Ссылка на сайт</a>  
+<a href="https://api-mesto-tat-rs.vercel.app" target="_blank" rel="noopener">Ссылка на сайт</a>  
 
-<a href="https://mesto-api22.herokuapp.com" target="_blank" rel="noopener">Ссылка на сервер https://mesto-api22.herokuapp.com</a>
+<a href="https://api-mesto.vercel.app" target="_blank" rel="noopener">Ссылка на сервер https://api-mesto.vercel.app</a>
   
