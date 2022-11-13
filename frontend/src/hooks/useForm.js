@@ -21,10 +21,17 @@ export function useForm() {
     })
 
     //объект с инф-ии об ошибках в инпуте
-    setErrors({
-      ...errors,
-      [evt.target.name]: evt.target.validationMessage
-    })
+    if(evt.target.title) {
+      setErrors({
+        ...errors,
+        [evt.target.name]: evt.target.title
+      })
+    } else {
+      setErrors({
+        ...errors,
+        [evt.target.name]: evt.target.validationMessage
+      })
+    }
 
     setValid(evt.target.closest(".form").checkValidity());//состояние валидности формы
   }

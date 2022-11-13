@@ -17,6 +17,8 @@ export const ERROR_LOGIN = 'Пользователь с таким email еще 
 
 export const ERROR_REGISTER = 'Пользователь с таким email уже зарегистрирован';
 
+export const ERROR_EMAIL_FORMAT = "Введите e-mail в формате: ivanov@yandex.ru";
+
 export const SUCCESS_REGISTER = 'Вы успешно зарегистрировались!';
 
 export const BASE_URL = 'https://api-mesto-tat-rs.vercel.app';
